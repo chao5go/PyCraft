@@ -1,0 +1,94 @@
+---
+title: 动态规划（DP）
+description: 递推、状态、记忆化，LeetCode 经典题型
+---
+
+# 动态规划（DP）
+
+把大问题拆成**重叠子问题**，用**递推**（或记忆化）避免重复计算。核心：定义状态、写转移方程、确定初值与顺序。
+
+## 思路
+
+1. **状态**：`dp[i]` 或 `dp[i][j]` 表示什么（例如：到第 i 个时的最优解）。
+2. **转移**：`dp[i]` 由哪些更小的 `dp[...]` 推出来。
+3. **初值**：最小的那几项先填好。
+4. **顺序**：按依赖关系从小往大算（或记忆化递归）。
+
+## 一维 DP：斐波那契
+
+`dp[i] = dp[i-1] + dp[i-2]`，初值 `dp[0]=0, dp[1]=1`。
+
+<PythonPlayground code={`def fib(n):
+    if n <= 1:
+        return n
+    dp = [0] * (n + 1)
+    dp[0], dp[1] = 0, 1
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+
+print(fib(6))   # 8
+# 空间可压成 O(1)：只保留前两项
+def fib_o1(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+print(fib_o1(6))   # 8`} />
+
+## 一维 DP：爬楼梯
+
+一次爬 1 或 2 阶，到第 n 阶几种方案？`dp[i] = dp[i-1] + dp[i-2]`，本质同斐波那契。
+
+<PythonPlayground code={`def climb_stairs(n):
+    if n <= 2:
+        return n
+    a, b = 1, 2
+    for _ in range(3, n + 1):
+        a, b = b, a + b
+    return b
+
+print(climb_stairs(4))   # 5`} />
+
+## 二维 DP：路径/网格
+
+从左上到右下，只能向右或向下，路径数或最小路径和。`dp[i][j]` 由 `dp[i-1][j]` 和 `dp[i][j-1]` 转移。
+
+<PythonPlayground code={`# 最小路径和：grid[i][j] 为权值，求左上到右下的最小和
+def min_path_sum(grid):
+    rows, cols = len(grid), len(grid[0])
+    dp = [[0] * cols for _ in range(rows)]
+    dp[0][0] = grid[0][0]
+    for j in range(1, cols):
+        dp[0][j] = dp[0][j - 1] + grid[0][j]
+    for i in range(1, rows):
+        dp[i][0] = dp[i - 1][0] + grid[i][0]
+    for i in range(1, rows):
+        for j in range(1, cols):
+            dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+    return dp[-1][-1]
+
+grid = [[1, 3, 1], [1, 5, 1], [4, 2, 1]]
+print(min_path_sum(grid))   # 7`} />
+
+## 记忆化递归
+
+不显式建表，用递归 + 缓存（如 `@lru_cache` 或字典）避免重复子问题，等价于 DP。
+
+<PythonPlayground code={`from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fib_memo(n):
+    if n <= 1:
+        return n
+    return fib_memo(n - 1) + fib_memo(n - 2)
+
+print(fib_memo(35))   # 9227465`} />
+
+## 小结
+
+- **状态**：想清楚 `dp[i]` / `dp[i][j]` 表示什么。
+- **转移**：写清楚由哪些更小的状态推过来。
+- **初值与顺序**：先填边界，再按依赖顺序填表（或记忆化递归）。

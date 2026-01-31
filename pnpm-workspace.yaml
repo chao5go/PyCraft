@@ -1,0 +1,2 @@
+patchedDependencies:
+  react-py: patches/react-py.patch

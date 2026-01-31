@@ -1,0 +1,77 @@
+---
+title: 函数
+description: def、return、lambda，LeetCode 必用
+---
+
+# 函数
+
+用 `def` 定义函数，`return` 返回值。LeetCode 每题都要写函数。
+
+<PythonPlayground code={`def add(a, b):
+    return a + b
+
+print(add(2, 3))  # 5
+
+# 默认参数
+def greet(name="世界"):
+    return f"你好, {name}"
+print(greet())       # 你好, 世界
+print(greet("LeetCode"))  # 你好, LeetCode`} />
+
+## 多返回值
+
+Python 可以一次返回多个值（本质是元组），交换、拆解常用。
+
+<PythonPlayground code={`def min_max(nums):
+    return min(nums), max(nums)
+
+low, high = min_max([3, 1, 4, 1, 5])
+print(low, high)  # 1 5
+
+# 交换两变量（LeetCode 常用）
+a, b = 1, 2
+a, b = b, a
+print(a, b)  # 2 1`} />
+
+## lambda 匿名函数
+
+一行写小函数，常用来做 `sort` 的 `key`。
+
+<PythonPlayground code={`# 普通函数
+def double(x):
+    return x * 2
+
+# lambda 等价
+double_l = lambda x: x * 2
+print(double_l(5))  # 10
+
+# 排序时按绝对值
+nums = [-3, 1, -2, 4]
+nums.sort(key=lambda x: abs(x))
+print(nums)  # [1, -2, -3, 4]
+
+# 按元组第二项排序（LeetCode 常见）
+pairs = [(1, 4), (2, 3), (3, 2)]
+pairs.sort(key=lambda p: p[1])
+print(pairs)  # [(3, 2), (2, 3), (1, 4)]`} />
+
+## 可变参数 *args
+
+不确定参数个数时用 `*args` 收成元组。
+
+<PythonPlayground code={`def sum_all(*args):
+    return sum(args)
+
+print(sum_all(1, 2, 3))      # 6
+print(sum_all(1, 2, 3, 4))   # 10`} />
+
+## 递归
+
+函数里调用自己，要有**终止条件**。LeetCode 树/链表递归题常用。
+
+<PythonPlayground code={`def fib(n):
+    if n <= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print(fib(6))  # 8`} />

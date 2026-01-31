@@ -1,0 +1,53 @@
+diff --git a/dist/workers/python-console-worker.js b/dist/workers/python-console-worker.js
+index 807b757131df1812eac3c969e4dba5d8694f2e6b..ba851287b0f92d88550da59b0449ad00660e31e8 100644
+--- a/dist/workers/python-console-worker.js
++++ b/dist/workers/python-console-worker.js
+@@ -91,7 +91,7 @@ var python = {
+                         return [4 /*yield*/, self.loadPyodide({})];
+                     case 1:
+                         _a.pyodide = _b.sent();
+-                        return [4 /*yield*/, self.pyodide.loadPackage(['pyodide-http'])];
++                        return [4 /*yield*/, self.pyodide.loadPackage(['pyodide-http']).catch(function () { })];
+                     case 2:
+                         _b.sent();
+                         if (!(packages[0].length > 0)) return [3 /*break*/, 4];
+@@ -110,11 +110,11 @@ var python = {
+                         _b.sent();
+                         _b.label = 7;
+                     case 7:
+-                        id = self.crypto.randomUUID();
++                        id = (self.crypto && typeof self.crypto.randomUUID === 'function') ? self.crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/x/g, function () { return (Math.random() * 16 | 0).toString(16); });
+                         version = self.pyodide.version;
+                         self.pyodide.registerJsModule('react_py', reactPyModule);
+                         namespace = self.pyodide.globals.get('dict')();
+-                        initConsoleCode = "\nimport pyodide_http\npyodide_http.patch_all()\n\nimport sys\nfrom pyodide.ffi import to_js\nfrom pyodide.console import PyodideConsole, repr_shorten, BANNER\nimport __main__\nBANNER = \"Welcome to the Pyodide terminal emulator \uD83D\uDC0D\\n\" + BANNER\npyconsole = PyodideConsole(__main__.__dict__)\nimport builtins\nasync def await_fut(fut):\n  res = await fut\n  if res is not None:\n    builtins._ = res\n  return to_js([res], depth=1)\ndef clear_console():\n  pyconsole.buffer = []\n";
++                        initConsoleCode = "\nimport sys\ntry:\n  import pyodide_http\n  pyodide_http.patch_all()\nexcept Exception:\n  pass\n\nfrom pyodide.ffi import to_js\nfrom pyodide.console import PyodideConsole, repr_shorten, BANNER\nimport __main__\nBANNER = \"Welcome to the Pyodide terminal emulator \uD83D\uDC0D\\n\" + BANNER\npyconsole = PyodideConsole(__main__.__dict__)\nimport builtins\nasync def await_fut(fut):\n  res = await fut\n  if res is not None:\n    builtins._ = res\n  return to_js([res], depth=1)\ndef clear_console():\n  pyconsole.buffer = []\n";
+                         return [4 /*yield*/, self.pyodide.runPythonAsync(initConsoleCode, { globals: namespace })];
+                     case 8:
+                         _b.sent();
+diff --git a/dist/workers/python-worker.js b/dist/workers/python-worker.js
+index 4f19d357cf86700358b711e9b2cd7634a5da7819..1e75b833cf1af485c8c82c9e611a6f298b71be05 100644
+--- a/dist/workers/python-worker.js
++++ b/dist/workers/python-worker.js
+@@ -99,7 +99,7 @@ var python = {
+                         // Enable debug mode
+                         // self.pyodide.setDebug(true)
+                         // Always load pyodide-http package
+-                        return [4 /*yield*/, self.pyodide.loadPackage(['pyodide-http'])
++                        return [4 /*yield*/, self.pyodide.loadPackage(['pyodide-http']).catch(function () { })
+                             // Load packages if provided
+                         ];
+                     case 2:
+@@ -123,10 +123,10 @@ var python = {
+                         _b.sent();
+                         _b.label = 7;
+                     case 7:
+-                        id = self.crypto.randomUUID();
++                        id = (self.crypto && typeof self.crypto.randomUUID === 'function') ? self.crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/x/g, function () { return (Math.random() * 16 | 0).toString(16); });
+                         version = self.pyodide.version;
+                         self.pyodide.registerJsModule('react_py', reactPyModule);
+-                        initCode = "\nimport sys\nimport pyodide_http\n\nsys.tracebacklimit = 0\n\npyodide_http.patch_all()\n";
++                        initCode = "\nimport sys\nsys.tracebacklimit = 0\ntry:\n  import pyodide_http\n  pyodide_http.patch_all()\nexcept Exception:\n  pass\n";
+                         return [4 /*yield*/, self.pyodide.runPythonAsync(initCode)];
+                     case 8:
+                         _b.sent();

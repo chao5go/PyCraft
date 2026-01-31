@@ -1,0 +1,4 @@
+{
+  "title": "常用内置与标准库",
+  "pages": ["01-builtins", "02-collections", "03-heapq", "04-math-bisect"]
+}

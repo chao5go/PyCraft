@@ -1,0 +1,49 @@
+---
+title: math 与 bisect
+description: 数学函数、二分查找，LeetCode 常用
+---
+
+# math 常用函数
+
+<PythonPlayground code={`import math
+
+print(math.sqrt(4))    # 2.0
+print(math.ceil(3.2))  # 4，向上取整
+print(math.floor(3.8)) # 3，向下取整
+print(math.gcd(12, 8)) # 4，最大公约数
+print(math.inf)        # 无穷大，初始化最小值常用
+print(-math.inf)       # 负无穷`} />
+
+## bisect 二分
+
+在**有序列表**里二分查找插入位置，或判断是否存在。
+
+<PythonPlayground code={`import bisect
+
+nums = [1, 3, 3, 5, 7]
+# 找第一个 >= 3 的下标（插入 3 仍保持有序的位置）
+i = bisect.bisect_left(nums, 3)
+print(i)   # 1
+
+# 找第一个 > 3 的下标
+j = bisect.bisect_right(nums, 3)
+print(j)   # 3
+
+# 插入并保持有序
+bisect.insort(nums, 4)
+print(nums)   # [1, 3, 3, 4, 5, 7]`} />
+
+## bisect_left / bisect_right 区别
+
+- `bisect_left(a, x)`：第一个 **>= x** 的下标（插在左边）
+- `bisect_right(a, x)`：第一个 **> x** 的下标（插在右边）
+
+<PythonPlayground code={`import bisect
+
+nums = [1, 2, 2, 2, 3]
+x = 2
+L = bisect.bisect_left(nums, x)   # 第一个 >= 2
+R = bisect.bisect_right(nums, x)  # 第一个 > 2
+# 等于 2 的区间是 [L, R)
+print(L, R)   # 1 4
+print(R - L)  # 3，等于 2 的个数`} />

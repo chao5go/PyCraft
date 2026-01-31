@@ -1,0 +1,151 @@
+---
+title: 数组常用操作
+description: 遍历、查找、翻转，刷题必会
+---
+
+# 数组常用操作
+
+列表（数组）的三种高频操作：**遍历**、**查找**、**翻转**。LeetCode 里几乎每题都会用到其中一种或多种。
+
+## 怎么遍历数组
+
+### 按元素遍历
+
+只关心值、不关心下标时，用 `for x in nums` 最简洁。
+
+<PythonPlayground code={`nums = [10, 20, 30]
+for x in nums:
+    print(x)   # 10, 20, 30`} />
+
+### 按下标遍历
+
+需要下标时用 `range(len(nums))`，或更推荐的 `enumerate`。
+
+<PythonPlayground code={`nums = [10, 20, 30]
+
+# 只要下标
+for i in range(len(nums)):
+    print(i, nums[i])
+
+# 下标和值都要（推荐）
+for i, x in enumerate(nums):
+    print(i, x)   # (0,10) (1,20) (2,30)
+
+# enumerate 从 1 开始编号
+for i, x in enumerate(nums, start=1):
+    print(i, x)   # (1,10) (2,20) (3,30)`} />
+
+### 倒序遍历
+
+从后往前：用 `reversed(range(len(nums)))` 或切片下标。
+
+<PythonPlayground code={`nums = [1, 2, 3]
+
+for i in range(len(nums) - 1, -1, -1):
+    print(nums[i])   # 3, 2, 1
+
+# 或者只关心值、倒序
+for x in reversed(nums):
+    print(x)   # 3, 2, 1`} />
+
+### 双指针遍历
+
+两端的下标 `left`, `right` 往中间走，常用于「反转、两数之和、判断回文」等。
+
+<PythonPlayground code={`nums = [1, 2, 3, 4, 5]
+left, right = 0, len(nums) - 1
+while left < right:
+    print(nums[left], nums[right])
+    left += 1
+    right -= 1
+# 1 5, 2 4, 3 3 结束`} />
+
+---
+
+## 怎么查找数组
+
+### 是否存在：`in`
+
+判断某个值是否在列表中，用 `in`（线性扫描，O(n)）。
+
+<PythonPlayground code={`nums = [3, 1, 4, 1, 5]
+print(4 in nums)   # True
+print(2 in nums)   # False`} />
+
+### 找下标：`index()`
+
+找**第一个**等于目标值的下标；找不到会抛 `ValueError`。
+
+<PythonPlayground code={`nums = [3, 1, 4, 1, 5]
+print(nums.index(4))   # 2
+print(nums.index(1))   # 1（第一个 1）
+
+# 找不到要自己处理
+if 2 in nums:
+    print(nums.index(2))
+else:
+    print(-1)`} />
+
+### 找所有下标
+
+需要「所有等于 x 的下标」时，用 `enumerate` 遍历一遍。
+
+<PythonPlayground code={`nums = [3, 1, 4, 1, 5]
+target = 1
+idx_list = [i for i, x in enumerate(nums) if x == target]
+print(idx_list)   # [1, 3]`} />
+
+### 有序数组查找：二分
+
+数组**已排序**时，用二分查找可以 O(log n)。Python 标准库有 `bisect`，详见 [二分与 bisect](/docs/stdlib/04-math-bisect)。
+
+<PythonPlayground code={`import bisect
+nums = [1, 2, 4, 4, 5]
+# 找第一个 >= 4 的下标
+print(bisect.bisect_left(nums, 4))   # 2
+# 找第一个 > 4 的下标
+print(bisect.bisect_right(nums, 4))   # 4`} />
+
+---
+
+## 怎么翻转数组
+
+### 得到新列表：切片 `[::-1]`
+
+不修改原列表，得到反转后的新列表，最常用。
+
+<PythonPlayground code={`nums = [1, 2, 3, 4, 5]
+rev = nums[::-1]
+print(rev)   # [5, 4, 3, 2, 1]
+print(nums)  # [1, 2, 3, 4, 5] 原列表不变`} />
+
+### 原地反转：`reverse()`
+
+直接改原列表，无返回值（返回 `None`）。
+
+<PythonPlayground code={`nums = [1, 2, 3, 4, 5]
+nums.reverse()
+print(nums)   # [5, 4, 3, 2, 1]`} />
+
+### 双指针原地反转
+
+面试常考「手写原地反转」：用左右指针交换元素。
+
+<PythonPlayground code={`def reverse_in_place(nums):
+    left, right = 0, len(nums) - 1
+    while left < right:
+        nums[left], nums[right] = nums[right], nums[left]
+        left += 1
+        right -= 1
+
+nums = [1, 2, 3, 4, 5]
+reverse_in_place(nums)
+print(nums)   # [5, 4, 3, 2, 1]`} />
+
+### 小结
+
+| 需求           | 写法              | 是否改原列表 |
+|----------------|-------------------|--------------|
+| 要新列表       | `nums[::-1]`      | 否           |
+| 原地反转       | `nums.reverse()`  | 是           |
+| 手写原地反转   | 双指针交换        | 是           |

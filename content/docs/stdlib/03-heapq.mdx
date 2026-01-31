@@ -1,0 +1,59 @@
+---
+title: heapq 堆
+description: 小顶堆、Top K、优先队列，LeetCode 常见
+---
+
+# heapq 小顶堆
+
+`heapq` 是**小顶堆**，堆顶是最小值。`heappush`、`heappop` 都是 O(log n)。
+
+<PythonPlayground code={`import heapq
+
+nums = [3, 1, 4, 1, 5]
+heapq.heapify(nums)   # 原地变成堆，O(n)
+print(nums[0])        # 1，堆顶最小
+
+x = heapq.heappop(nums)
+print(x, nums)        # 1 [1, 3, 4, 5]
+
+heapq.heappush(nums, 0)
+print(nums[0])        # 0`} />
+
+## 取前 K 小 / 前 K 大
+
+前 K 小：维护大小为 K 的堆，或 `nsmallest(k, arr)`。  
+前 K 大：用负值当“大顶堆”，或 `nlargest(k, arr)`。
+
+<PythonPlayground code={`import heapq
+
+nums = [3, 1, 4, 1, 5, 9, 2, 6]
+# 前 3 小
+print(heapq.nsmallest(3, nums))   # [1, 1, 2]
+# 前 3 大
+print(heapq.nlargest(3, nums))   # [9, 6, 5]`} />
+
+## 大顶堆：取负
+
+heapq 只有小顶堆，要“最大值在堆顶”就存负值，取出来再取负。
+
+<PythonPlayground code={`import heapq
+
+# 模拟大顶堆
+nums = [3, 1, 4]
+heap = [-x for x in nums]
+heapq.heapify(heap)
+# 堆顶是 -4，即原数组最大
+print(-heapq.heappop(heap))   # 4
+print(-heapq.heappop(heap))   # 3`} />
+
+## 按元组排序（多关键字）
+
+堆里放元组时，按**第一个元素**比大小，所以“优先级”放第一项。
+
+<PythonPlayground code={`import heapq
+
+# (距离, 点) 按距离最小出堆
+heap = [(2, "B"), (1, "A"), (3, "C")]
+heapq.heapify(heap)
+d, node = heapq.heappop(heap)
+print(d, node)   # 1 A`} />

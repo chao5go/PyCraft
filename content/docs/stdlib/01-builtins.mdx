@@ -1,0 +1,85 @@
+---
+title: 常用内置函数
+description: len、range、enumerate、zip、sorted、min、max、sum
+---
+
+# 常用内置函数
+
+LeetCode 里几乎每题都会用到这些，不用 import。
+
+<PythonPlayground code={`nums = [3, 1, 4, 1, 5]
+print(len(nums))    # 5
+print(min(nums))    # 1
+print(max(nums))    # 5
+print(sum(nums))    # 14
+print(abs(-3))      # 3`} />
+
+## range
+
+`range(n)` 是 0 到 n-1，`range(start, end)` 左闭右开，`range(start, end, step)` 可指定步长。
+
+<PythonPlayground code={`print(list(range(5)))         # [0, 1, 2, 3, 4]
+print(list(range(2, 6)))     # [2, 3, 4, 5]
+print(list(range(0, 10, 2))) # [0, 2, 4, 6, 8]
+print(list(range(5, 0, -1)))  # [5, 4, 3, 2, 1]`} />
+
+## enumerate
+
+遍历时同时拿到**下标和值**，不用手写 `i`。
+
+<PythonPlayground code={`nums = [10, 20, 30]
+for i, x in enumerate(nums):
+    print(i, x)
+# 0 10
+# 1 20
+# 2 30
+
+# 从 1 开始编号
+for i, x in enumerate(nums, 1):
+    print(i, x)`} />
+
+## zip
+
+把多个序列“并排”遍历，按最短的截断。
+
+<PythonPlayground code={`a = [1, 2, 3]
+b = ["a", "b", "c"]
+for x, y in zip(a, b):
+    print(x, y)
+# 1 a
+# 2 b
+# 3 c
+
+# 转成 list 是元组列表
+print(list(zip(a, b)))  # [(1, 'a'), (2, 'b'), (3, 'c')]`} />
+
+## sorted
+
+返回**新列表**，不改变原列表。`reverse=True` 降序，`key=` 指定排序依据。
+
+<PythonPlayground code={`nums = [3, 1, 4, 1, 5]
+print(sorted(nums))              # [1, 1, 3, 4, 5]
+print(sorted(nums, reverse=True)) # [5, 4, 3, 1, 1]
+print(nums)                       # [3, 1, 4, 1, 5]，原列表不变
+
+# 按绝对值排序
+print(sorted([-3, 1, -2], key=abs))  # [1, -2, -3]
+# 按元组第二项
+pairs = [(1, 4), (2, 3)]
+print(sorted(pairs, key=lambda p: p[1]))  # [(2, 3), (1, 4)]`} />
+
+## reversed
+
+返回反向迭代器，要列表就 `list(reversed(lst))`。
+
+<PythonPlayground code={`nums = [1, 2, 3]
+print(list(reversed(nums)))  # [3, 2, 1]
+# 等价于 nums[::-1]`} />
+
+## divmod
+
+一次得到商和余数，整除题常用。
+
+<PythonPlayground code={`q, r = divmod(17, 5)
+print(q, r)   # 3 2
+print(17 // 5, 17 % 5)   # 一样`} />

@@ -1,0 +1,59 @@
+---
+title: 迭代器与生成器
+description: iter、next、yield，惰性求值，LeetCode 与刷题常用
+---
+
+# 迭代器与生成器
+
+迭代器按需产出元素，生成器用 `yield` 写迭代器，省内存、可表示无穷序列。
+
+## 迭代器 iter / next
+
+可迭代对象（list、range、dict...）可用 `iter()` 得到迭代器，用 `next()` 取下一个；没有下一个会抛 `StopIteration`。
+
+<PythonPlayground code={`it = iter([1, 2, 3])
+print(next(it))   # 1
+print(next(it))   # 2
+print(next(it))   # 3
+# print(next(it))  # StopIteration
+
+# for 本质就是迭代器 + next
+for x in [1, 2, 3]:
+    print(x)`} />
+
+## 生成器 yield
+
+函数里用 `yield` 就变成**生成器函数**，调用后返回生成器（一种迭代器），每次 `next()` 执行到下一个 `yield` 为止。
+
+<PythonPlayground code={`def count_up(n):
+    i = 0
+    while i < n:
+        yield i
+        i += 1
+
+g = count_up(3)
+print(list(g))   # [0, 1, 2]
+
+# 生成器表达式（类似列表推导，但惰性）
+squares = (x * x for x in range(5))
+print(list(squares))   # [0, 1, 4, 9, 16]`} />
+
+## 惰性求值
+
+生成器按需算，不一次占满内存，适合大序列或无穷序列。
+
+<PythonPlayground code={`def fib_gen():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+# 前 8 个斐波那契
+g = fib_gen()
+print([next(g) for _ in range(8)])   # [0, 1, 1, 2, 3, 5, 8, 13]`} />
+
+## 小结
+
+- **迭代器**：`iter(obj)`、`next(it)`，`for` 依赖可迭代/迭代器。
+- **生成器**：`yield` 函数 或 `(x for x in ...)`，惰性、省内存。
+- LeetCode 里常用 `yield` 做「按需遍历」或「流式结果」。

@@ -1,0 +1,67 @@
+---
+title: collections：deque、defaultdict、Counter
+description: BFS 用 deque，计数用 Counter，缺省值用 defaultdict
+---
+
+# deque 双端队列
+
+`collections.deque` 两端 O(1) 入队出队，**BFS 用队列时用 deque，不要用 list 当队头 pop(0)（O(n)）**。
+
+<PythonPlayground code={`from collections import deque
+
+q = deque([1, 2, 3])
+q.append(4)       # 右端入队
+q.appendleft(0)    # 左端入队
+print(q)          # deque([0, 1, 2, 3, 4])
+
+x = q.popleft()   # 左端出队，O(1)
+print(x, q)       # 0 deque([1, 2, 3, 4])
+
+# BFS 模板
+def bfs(start):
+    q = deque([start])
+    while q:
+        node = q.popleft()
+        # 处理 node，再把邻居 append 进 q
+        pass
+    return`} />
+
+## defaultdict
+
+键不存在时自动给默认值，不用先 `if k not in d`。
+
+<PythonPlayground code={`from collections import defaultdict
+
+# 默认值是 0
+d = defaultdict(int)
+d["a"] += 1
+d["a"] += 1
+print(d["a"])   # 2
+print(d["b"])   # 0，自动创建
+
+# 默认值是列表，用来分组
+d = defaultdict(list)
+d["even"].append(2)
+d["even"].append(4)
+d["odd"].append(1)
+print(d)   # defaultdict(<class 'list'>, {'even': [2, 4], 'odd': [1]})`} />
+
+## Counter
+
+计数专用，`most_common(n)` 取前 n 个最多的。
+
+<PythonPlayground code={`from collections import Counter
+
+nums = [1, 2, 2, 3, 3, 3]
+cnt = Counter(nums)
+print(cnt)              # Counter({3: 3, 2: 2, 1: 1})
+print(cnt[2])           # 2
+print(cnt[0])           # 0，没有就是 0
+
+# 字符串字符计数
+s = "hello"
+print(Counter(s))       # Counter({'l': 2, 'h': 1, 'e': 1, 'o': 1})
+
+# 前 k 个最多的
+cnt = Counter([1,1,1,2,2,3])
+print(cnt.most_common(2))  # [(1, 3), (2, 2)]`} />

@@ -1,0 +1,62 @@
+---
+title: 字典与集合 dict / set
+description: O(1) 查找，哈希表，LeetCode 两数之和等必用
+---
+
+# 字典 dict
+
+字典是键值对，**查找、插入、删除平均 O(1)**，LeetCode 里用来“记出现过的数/下标”非常常见。
+
+<PythonPlayground code={`d = {"a": 1, "b": 2, "c": 3}
+print(d["a"])       # 1
+print(d.get("b"))   # 2
+print(d.get("x"))   # None，键不存在不报错
+print(d.get("x", 0))  # 0，默认值
+
+d["d"] = 4          # 新增
+d["a"] = 10         # 修改
+del d["b"]          # 删除
+print(d)            # {'a': 10, 'c': 3, 'd': 4}`} />
+
+## 遍历与 keys / values / items
+
+<PythonPlayground code={`d = {"a": 1, "b": 2}
+for k in d:
+    print(k, d[k])
+for k, v in d.items():
+    print(k, v)
+print(list(d.keys()))    # ['a', 'b']
+print(list(d.values()))  # [1, 2]`} />
+
+## 集合 set
+
+集合**无重复、无序**，查找/增删平均 O(1)，用来“去重”或“判断是否出现过”。
+
+<PythonPlayground code={`s = {1, 2, 3}
+s.add(4)
+s.add(2)   # 已有，不重复
+print(s)   # {1, 2, 3, 4}
+
+print(2 in s)   # True，O(1)
+s.remove(2)
+print(s)        # {1, 3, 4}
+
+# 列表去重
+nums = [1, 2, 2, 3, 3, 3]
+print(list(set(nums)))  # [1, 2, 3]，顺序可能变`} />
+
+## 两数之和思路（哈希表）
+
+用字典存“已见过的数 → 下标”，边遍历边查 `target - num` 是否在字典里。
+
+<PythonPlayground code={`def two_sum(nums, target):
+    seen = {}   # 值 -> 下标
+    for i, num in enumerate(nums):
+        need = target - num
+        if need in seen:
+            return [seen[need], i]
+        seen[num] = i
+    return []
+
+print(two_sum([2, 7, 11, 15], 9))   # [0, 1]
+print(two_sum([3, 2, 4], 6))        # [1, 2]`} />

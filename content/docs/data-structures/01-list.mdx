@@ -1,0 +1,85 @@
+---
+title: 列表 list
+description: 索引、切片、增删改，LeetCode 最常用
+---
+
+# 列表 list
+
+列表是可变的、有序的序列，LeetCode 里几乎每题都会用到。
+
+<PythonPlayground code={`nums = [1, 2, 3, 4, 5]
+print(nums[0])    # 1，第一个
+print(nums[-1])   # 5，最后一个
+print(nums[-2])   # 4，倒数第二个
+print(len(nums))  # 5`} />
+
+## 切片 [start:end:step]
+
+切片得到新列表，不修改原列表。`[::-1]` 是常用“反转”。
+
+<PythonPlayground code={`nums = [1, 2, 3, 4, 5]
+print(nums[1:4])   # [2, 3, 4]，左闭右开
+print(nums[:3])    # [1, 2, 3]，从头到下标 3
+print(nums[2:])    # [3, 4, 5]，从下标 2 到末尾
+print(nums[::-1])  # [5, 4, 3, 2, 1]，反转
+print(nums[::2])   # [1, 3, 5]，步长 2`} />
+
+## 增删改
+
+`append`、`pop`、`insert`、`remove` 是 LeetCode 里最常用的操作。
+
+<PythonPlayground code={`nums = [1, 2, 3]
+nums.append(4)        # 末尾加一个
+print(nums)           # [1, 2, 3, 4]
+
+x = nums.pop()        # 删最后一个，返回 4
+print(nums, x)        # [1, 2, 3] 4
+
+nums.insert(0, 0)     # 在下标 0 处插入 0
+print(nums)           # [0, 1, 2, 3]
+
+nums.remove(2)        # 删第一个值为 2 的元素
+print(nums)           # [0, 1, 3]`} />
+
+## 其他常用方法
+
+`extend` 合并列表，`index` 查下标，`count` 计数，`reverse` 原地反转，`sort` 原地排序。
+
+<PythonPlayground code={`a = [1, 2]
+b = [3, 4]
+a.extend(b)
+print(a)   # [1, 2, 3, 4]
+
+nums = [3, 1, 2, 1]
+print(nums.index(1))   # 1，第一个 1 的下标
+print(nums.count(1))    # 2
+
+nums.reverse()
+print(nums)   # [1, 2, 1, 3]
+nums.sort()
+print(nums)   # [1, 1, 2, 3]`} />
+
+## 复制与注意
+
+直接赋值是引用，改一个会改另一个；要复制用 `lst.copy()` 或 `lst[:]`。
+
+<PythonPlayground code={`a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)   # [1, 2, 3, 4]，a 也被改了
+
+c = a.copy()
+c.append(5)
+print(a)   # [1, 2, 3, 4]，a 不变
+print(c)   # [1, 2, 3, 4, 5]`} />
+
+## 常用写法小结
+
+LeetCode 里常写的几行：反转、去重（顺序可能变）、合并、初始化。
+
+<PythonPlayground code={`nums = [1, 2, 3]
+rev = nums[::-1]           # 反转
+uniq = list(dict.fromkeys([1, 2, 2, 3]))  # 去重保序（Python 3.7+）
+merged = [1, 2] + [3, 4]   # 合并
+zeros = [0] * 5            # [0, 0, 0, 0, 0]
+print(rev, uniq, merged, zeros)`} />

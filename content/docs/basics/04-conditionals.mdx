@@ -1,0 +1,62 @@
+---
+title: 条件与分支
+description: if / elif / else，LeetCode 里到处用到
+---
+
+# 条件与分支
+
+用 `if` / `elif` / `else` 根据条件执行不同代码。
+
+<PythonPlayground code={`x = 10
+if x > 0:
+    print("正数")
+elif x < 0:
+    print("负数")
+else:
+    print("零")`} />
+
+## 比较与逻辑
+
+LeetCode 里常用比较：`==`、`!=`、`<`、`<=`、`>`、`>=`；逻辑：`and`、`or`、`not`。
+
+<PythonPlayground code={`a, b = 3, 5
+print(a == b)   # False
+print(a != b)   # True
+print(a < b)    # True
+print(not (a > b))  # True
+
+# 判断是否在范围内
+n = 7
+if 1 <= n <= 10:
+    print("n 在 1~10 之间")`} />
+
+## 三元表达式
+
+一行写简单分支：`值1 if 条件 else 值2`。
+
+<PythonPlayground code={`a, b = 3, 5
+max_val = a if a > b else b
+print(max_val)  # 5
+
+# 常用于返回值
+def abs_val(x):
+    return x if x >= 0 else -x
+print(abs_val(-3))  # 3`} />
+
+## 空值判断
+
+判断 `None`、空列表、空字符串时常用 `if not x` 或 `if x`。
+
+<PythonPlayground code={`lst = []
+s = ""
+if not lst:
+    print("列表为空")
+if not s:
+    print("字符串为空")
+
+# 非空才处理
+node = None
+if node:
+    print(node)
+else:
+    print("没有节点")`} />

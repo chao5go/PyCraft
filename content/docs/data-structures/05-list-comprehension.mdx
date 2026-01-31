@@ -1,0 +1,50 @@
+---
+title: 列表推导式
+description: 一行生成列表，LeetCode 写起来更短
+---
+
+# 列表推导式
+
+用 `[表达式 for 变量 in 可迭代对象]` 一行生成新列表，可加 `if` 过滤。
+
+<PythonPlayground code={`# 平方
+nums = [1, 2, 3, 4]
+squares = [x * x for x in nums]
+print(squares)   # [1, 4, 9, 16]
+
+# 只要偶数
+evens = [x for x in nums if x % 2 == 0]
+print(evens)     # [2, 4]
+
+# 带条件的表达式
+labels = ["偶数" if x % 2 == 0 else "奇数" for x in nums]
+print(labels)    # ['奇数', '偶数', '奇数', '偶数']`} />
+
+## 字典推导式
+
+<PythonPlayground code={`nums = [1, 2, 3]
+d = {x: x * x for x in nums}
+print(d)   # {1: 1, 2: 4, 3: 9}
+
+# 反转 dict：值 -> 键（值唯一时）
+old = {"a": 1, "b": 2}
+new = {v: k for k, v in old.items()}
+print(new)   # {1: 'a', 2: 'b'}`} />
+
+## 集合推导式
+
+<PythonPlayground code={`s = {x % 3 for x in [1, 2, 3, 4, 5, 6]}
+print(s)   # {0, 1, 2}，余数去重`} />
+
+## 二维 / 嵌套
+
+LeetCode 里生成二维列表、展平等会用到。
+
+<PythonPlayground code={`# 3x3 全 0
+matrix = [[0] * 3 for _ in range(3)]
+print(matrix)   # [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+# 展平二维
+grid = [[1, 2], [3, 4]]
+flat = [x for row in grid for x in row]
+print(flat)   # [1, 2, 3, 4]`} />

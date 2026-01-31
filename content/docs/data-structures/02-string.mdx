@@ -1,0 +1,63 @@
+---
+title: 字符串 string
+description: 索引、切片、常用方法，LeetCode 字符串题必备
+---
+
+# 字符串 string
+
+字符串是**不可变**的，索引和切片和列表类似，但不能 `s[0] = 'x'`。
+
+<PythonPlayground code={`s = "hello"
+print(s[0], s[-1])   # h o
+print(s[1:4])        # ell
+print(s[::-1])       # olleh，反转
+print(len(s))        # 5`} />
+
+## 常用方法
+
+`split`、`join`、`strip`、`replace`、`find`、`in` 在 LeetCode 里很常见。
+
+<PythonPlayground code={`s = "  a b c  "
+print(s.split())       # ['a', 'b', 'c']，默认按空白切
+print(s.split(" "))    # ['', '', 'a', 'b', 'c', '', '']
+
+parts = ["a", "b", "c"]
+print("-".join(parts))  # a-b-c
+print("".join(parts))   # abc
+
+s = "  hello  "
+print(s.strip())       # hello，去首尾空白
+print("abca".strip("a"))  # bc`} />
+
+## 查找与替换
+
+<PythonPlayground code={`s = "hello world"
+print(s.find("ll"))      # 2，找不到返回 -1
+print(s.find("x"))       # -1
+print("ll" in s)        # True
+
+print(s.replace("world", "LeetCode"))  # hello LeetCode
+# 原字符串不变
+print(s)  # hello world`} />
+
+## 大小写与判断
+
+<PythonPlayground code={`s = "Hello"
+print(s.upper())   # HELLO
+print(s.lower())   # hello
+print(s.isdigit()) # False
+print("123".isdigit())  # True
+print("a".isalpha())   # True`} />
+
+## 字符与数字互转
+
+LeetCode 字符题常用 `ord`、`chr`。
+
+<PythonPlayground code={`print(ord('a'))   # 97
+print(ord('A'))   # 65
+print(chr(97))   # a
+print(chr(65))   # A
+
+# 小写字母转 0~25
+idx = ord('c') - ord('a')
+print(idx)  # 2`} />

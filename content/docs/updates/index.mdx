@@ -1,0 +1,44 @@
+---
+title: 内容更新记录
+description: 按日期记录本站内容与功能更新
+---
+
+# 内容更新记录
+
+按日期记录本站的**内容与功能更新**，方便回溯和查阅。每次改教程或修 bug 后，在本页对应日期下加几条即可。
+
+---
+
+## 2025-01-31
+
+- **首页**：根路径 `/` 改为直接重定向到 `/docs`，进入站点即进入教程，不再单独展示「开始学习」页。
+- **运行报错**：修复 `ModuleNotFoundError: pyodide_http` —— 在 **python-worker** 与 **python-console-worker** 中均对 `pyodide-http` 做可选加载（`loadPackage` 失败不抛错、Python 里 `import pyodide_http` 用 try/except 包裹），运行代码块不再依赖该包。
+- **侧边栏 / 控制台报错**：彻底跳过 react-py 的 Service Worker 注册（`PythonProvider` 内直接跳到 case 6），不再出现「Service workers not supported」及 `__webpack_require__.U is not a constructor`。
+- **PythonPlayground**：仅在客户端挂载后再渲染 `PythonProvider`（`mounted` 状态 + `useEffect`），避免 SSR/首帧时因 Promise/Worker 导致的 Call Stack 报错；未挂载时显示「加载代码编辑器中…」占位。
+- **文档页**：`getPage` 后增加 `page?.data?.body` 判断，缺失时 `notFound()`，避免空引用。
+- **更新记录页**：新增「内容更新记录」页面（本页），并在文档首页与侧栏加入入口。
+
+---
+
+## 2025-01-30（及之前）
+
+- **教程结构**：完成面向 LeetCode 的 Python 语法与基础教程——基础（Hello World、变量、循环、条件、函数）、数据结构（list、string、dict/set、tuple、列表推导式）、常用内置与标准库（builtins、collections、heapq、math/bisect）、进阶（类与对象、LeetCode 小技巧）。
+- **界面**：首页按钮改为翠绿底 + 白字；运行按钮提高对比度与辨识度；之后改为首页直接跳转教程。
+- **修复**：pyodide_http 可选、Service Worker 禁用、PythonPlayground 客户端挂载、搜索 API 的 `pageToIndexFn` 安全处理等（见上日及 CHANGELOG）。
+- **项目**：基于 Fumadocs + react-py + Monaco + Tailwind 搭建，实现 PythonPlayground、文档路由、搜索、MDX 配置；`lib/source` 从 `.source/server` 导入；CHANGELOG 与 README 说明补全。
+
+---
+
+## 如何添加新的更新
+
+在**当前文件**顶部「内容更新记录」标题下、**最新日期区块之上**插入类似结构：
+
+```md
+## YYYY-MM-DD
+
+- **分类（可选）**：简短说明 1。
+- 第二条更新说明。
+- 第三条。
+```
+
+保存后侧栏「更新记录」会同步更新；若需按「近 7 日」筛选，可后续再加单独页面或筛选逻辑。

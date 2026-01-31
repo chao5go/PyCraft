@@ -1,0 +1,37 @@
+---
+title: 循环
+description: for 与 while 循环
+---
+
+# 循环
+
+## for 循环
+
+遍历序列（列表、字符串等）时常用 `for`：
+
+<PythonPlayground code={`# 遍历列表
+fruits = ["苹果", "香蕉", "橙子"]
+for f in fruits:
+    print(f"我喜欢 {f}")
+
+# 带索引: range
+for i in range(3):
+    print(f"第 {i + 1} 次")`} />
+
+## while 循环
+
+条件为真时一直执行：
+
+<PythonPlayground code={`n = 0
+while n < 5:
+    print(n)
+    n += 1
+print("结束")`} />
+
+## 试一试
+
+用循环输出 1 到 10 的平方。
+
+<PythonPlayground code={`# 你的代码
+for i in range(1, 11):
+    print(f"{i} 的平方 = {i * i}")`} />

@@ -1,0 +1,95 @@
+---
+title: LeetCode 小技巧
+description: 复杂度、交换、无穷大、常用写法
+---
+
+# 时间复杂度要记的
+
+- **list**：按下标访问 O(1)，`append`/`pop()` O(1)，`pop(0)`/`insert(0, x)` O(n)
+- **dict / set**：查找、插入、删除平均 O(1)
+- **deque**：两端 `append`/`popleft` 都是 O(1)，BFS 用 deque 别用 list 当队列
+- **heapq**：`heappush`/`heappop` O(log n)，堆顶 O(1)
+- **list 的 in**：O(n)；**set/dict 的 in**：O(1)
+
+<PythonPlayground code={`# 判断“是否出现过”用 set，别用 list
+seen = set()
+seen.add(1)
+print(1 in seen)   # True，O(1)
+
+# 队列用 deque
+from collections import deque
+q = deque()
+q.append(1)
+q.popleft()   # O(1)，list.pop(0) 是 O(n)`} />
+
+## 无穷大与初始最值
+
+求最小值初始成 `float('inf')` 或 `math.inf`，求最大值初始成 `-float('inf')`。
+
+<PythonPlayground code={`import math
+
+# 求数组最小值
+nums = [3, 1, 4]
+ans = math.inf
+for x in nums:
+    ans = min(ans, x)
+print(ans)   # 1
+
+# 求数组最大值
+ans = -math.inf
+for x in nums:
+    ans = max(ans, x)
+print(ans)   # 4`} />
+
+## 交换、多重赋值、解包
+
+<PythonPlayground code={`a, b = 1, 2
+a, b = b, a   # 交换，不用临时变量
+print(a, b)   # 2 1
+
+# 解包
+nums = [1, 2, 3]
+first, *rest = nums
+print(first, rest)   # 1 [2, 3]
+
+# 合并列表
+a, b = [1, 2], [3, 4]
+merged = [*a, *b]
+print(merged)   # [1, 2, 3, 4]`} />
+
+## 边界与下标
+
+- 左闭右开：`range(n)` 是 0..n-1，`nums[i:j]` 是 i 到 j-1
+- 负下标：`-1` 是最后一个，`-2` 是倒数第二个
+- 空：`if not lst` 判断空列表，`if not s` 判断空字符串
+
+<PythonPlayground code={`nums = [1, 2, 3, 4, 5]
+print(nums[-1])   # 5
+print(nums[-2])   # 4
+print(nums[1:4])  # [2, 3, 4]，左闭右开
+
+lst = []
+if not lst:
+    print("空列表")`} />
+
+## 二维列表初始化
+
+不要用 `[[0]*n]*m`，每行会是同一个引用；用列表推导式。
+
+<PythonPlayground code={`# 错误：每行是同一引用
+wrong = [[0] * 3] * 2
+wrong[0][0] = 1
+print(wrong)   # [[1, 0, 0], [1, 0, 0]]
+
+# 正确
+right = [[0] * 3 for _ in range(2)]
+right[0][0] = 1
+print(right)   # [[1, 0, 0], [0, 0, 0]]`} />
+
+## 调试
+
+LeetCode 本地调试时常用 `print` 看变量；线上用「调试」面板或打日志。
+
+<PythonPlayground code={`x = [1, 2, 3]
+print("x =", x)   # 看中间结果
+print("len =", len(x))`} />

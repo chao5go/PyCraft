@@ -1,0 +1,33 @@
+---
+title: 变量
+description: 认识变量与数据类型
+---
+
+# 变量
+
+在 Python 里，变量不需要声明类型，直接赋值即可。
+
+<PythonPlayground code={`# 数字
+age = 18
+pi = 3.14
+
+# 字符串
+name = "小明"
+
+# 布尔值
+is_student = True
+
+print(f"姓名: {name}, 年龄: {age}")
+print(f"是学生吗? {is_student}")`} />
+
+## 类型查看
+
+用 `type()` 可以查看变量的类型：
+
+<PythonPlayground code={`x = 42
+y = "hello"
+z = [1, 2, 3]
+
+print(type(x))  # <class 'int'>
+print(type(y))  # <class 'str'>
+print(type(z))  # <class 'list'>`} />

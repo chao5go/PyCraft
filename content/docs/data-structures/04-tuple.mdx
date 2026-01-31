@@ -1,0 +1,45 @@
+---
+title: 元组 tuple
+description: 不可变、可哈希，可当 dict 的 key
+---
+
+# 元组 tuple
+
+元组是**不可变**的序列，用 `()` 表示。不能改、不能增删，所以可以**哈希**，能当字典的 key 或放进 set。
+
+<PythonPlayground code={`t = (1, 2, 3)
+print(t[0])     # 1
+print(t[-1])    # 3
+# t[0] = 10   # 报错，不可变
+
+# 当 dict 的 key（坐标、状态常用）
+d = {(0, 0): "起点", (1, 1): "终点"}
+print(d[(0, 0)])   # 起点
+
+# 放进 set 去重“状态”
+states = {(1, 2), (1, 2), (3, 4)}
+print(states)   # {(1, 2), (3, 4)}`} />
+
+## 元组解包
+
+多变量赋值、交换、函数多返回值都用元组解包。
+
+<PythonPlayground code={`a, b = 1, 2
+print(a, b)   # 1 2
+
+a, b = b, a   # 交换
+print(a, b)   # 2 1
+
+def f():
+    return 10, 20
+x, y = f()
+print(x, y)   # 10 20`} />
+
+## 单元素元组
+
+单元素元组要加逗号，否则是普通括号。
+
+<PythonPlayground code={`t = (1,)    # 元组
+n = (1)    # 只是整数 1
+print(type(t))  # <class 'tuple'>
+print(type(n))  # <class 'int'>`} />

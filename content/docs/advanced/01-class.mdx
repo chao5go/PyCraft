@@ -1,0 +1,88 @@
+---
+title: 类与对象（LeetCode 常用）
+description: __init__、self、自定义比较 __lt__
+---
+
+# 类与 self
+
+LeetCode 设计题、链表/树节点常用类。`__init__` 是构造函数，`self` 代表当前对象。
+
+<PythonPlayground code={`class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+# 建一个链表 1 -> 2 -> 3
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+print(head.val, head.next.val, head.next.next.val)  # 1 2 3`} />
+
+## self 参数什么意思？
+
+**`self` 就是「当前这个对象」的引用**。在类的方法里，你要操作「当前这个节点/这个实例」的属性，就要通过 `self` 来访问。
+
+- **第一个参数**：类里定义方法时，**第一个参数约定写成 `self`**（名字可以改，但大家都用 `self`）。调用时**不用传**，Python 会自动把当前对象传进去。
+- **`self.xxx`**：表示「当前对象的属性」。例如 `self.val = val` 表示把参数 `val` 存到当前对象的 `val` 属性上；`self.next = next` 表示当前节点的「下一个」是谁。
+- **为什么要有 self？** 因为同一个类会创建很多个对象（很多个 ListNode），方法里需要知道「现在处理的是哪一个」，所以用 `self` 指代当前这个。
+
+<PythonPlayground code={`class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val   # 当前节点的值
+        self.next = next # 当前节点的下一个节点
+
+    def get_val(self):
+        return self.val  # 返回「当前这个节点」的 val
+
+# 调用时不用传 self：head.get_val() 等价于 ListNode.get_val(head)
+head = ListNode(1)
+print(head.get_val())   # 1，self 就是 head
+node2 = ListNode(2)
+print(node2.get_val())   # 2，self 就是 node2`} />
+
+简单记：**写类方法时第一个参数写 `self`，用 `self.属性名` 访问/修改当前对象的属性；调用时不用传 self。**
+
+## 二叉树节点
+
+<PythonPlayground code={`class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+print(root.val, root.left.val, root.right.val)  # 1 2 3`} />
+
+## 自定义排序 __lt__
+
+堆、排序需要比较时，实现 `__lt__(self, other)` 表示“小于”，即可用 `sorted`、`heapq`。
+
+<PythonPlayground code={`class Node:
+    def __init__(self, val, priority):
+        self.val = val
+        self.priority = priority
+    def __lt__(self, other):
+        return self.priority < other.priority  # 优先级小的“更小”
+
+import heapq
+nodes = [Node("B", 2), Node("A", 1), Node("C", 3)]
+heapq.heapify(nodes)
+print(heapq.heappop(nodes).val)  # A，优先级 1 最小`} />
+
+## 常用魔术方法
+
+- `__str__`：`print(obj)` 时用
+- `__repr__`：在解释器里显示用
+- `__len__`：`len(obj)` 时用
+
+<PythonPlayground code={`class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+p = Point(1, 2)
+print(p)   # (1, 2)`} />
