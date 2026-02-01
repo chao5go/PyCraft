@@ -1,5 +1,2 @@
-# 单包项目，仅用此文件做 patch；pnpm 要求存在 packages 字段
+# 单包项目；pnpm 要求存在 packages 字段。patchedDependencies 在 package.json 的 pnpm 字段中配置
 packages: []
-
-patchedDependencies:
-  react-py: patches/react-py.patch

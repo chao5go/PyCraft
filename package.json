@@ -1,7 +1,12 @@
 {
-  "name": "python-learn",
+  "name": "pycraft",
   "version": "0.1.0",
   "private": true,
+  "pnpm": {
+    "patchedDependencies": {
+      "react-py": "patches/react-py.patch"
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

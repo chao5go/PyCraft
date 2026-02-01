@@ -1,4 +1,4 @@
-# Python 学习站
+# PyCraft
 
 面向 LeetCode 的 Python 语法与基础教程，在浏览器里写代码、看结果，无需安装环境。
 
@@ -33,7 +33,7 @@ pnpm dev
 ## 项目结构
 
 ```
-learn-python/
+pycraft/
 ├── app/
 │   ├── docs/[[...slug]]/page.tsx   # 文档页
 │   ├── api/search/route.ts         # 全文搜索（部署到 Vercel 等时可用）
@@ -57,7 +57,7 @@ learn-python/
 │   └── layout.shared.tsx           # 导航/布局配置
 ├── mdx-components.tsx              # MDX 组件（含 PythonPlayground）
 ├── source.config.ts                # Fumadocs 源配置
-└── .github/workflows/deploy.yml     # GitHub Pages 自动部署
+└── .gitignore
 ```
 
 ---
@@ -73,22 +73,14 @@ learn-python/
 
 ## 部署
 
-### 本地 / Vercel 等（带搜索）
+### Vercel（推荐，带搜索）
 
 ```bash
 pnpm build
 pnpm start
 ```
 
-部署到 Vercel、Railway 等支持 Node 的平台时，`/api/search` 可用，站内搜索正常。
-
-### GitHub Pages（静态，无搜索）
-
-1. 仓库 **Settings → Pages → Build and deployment → Source** 选 **GitHub Actions**。
-2. 推送代码到 `main` 分支（若默认分支是 `master`，在 `.github/workflows/deploy.yml` 里把 `branches: [main]` 改为 `branches: [master]`）。
-3. 构建完成后访问：`https://<用户名>.github.io/<仓库名>/`。
-
-静态导出时无服务端，**站内搜索在 GitHub Pages 上不可用**；仅需搜索时可部署到 Vercel。
+部署到 Vercel（或 Railway 等支持 Node 的平台）时，`/api/search` 可用，站内搜索正常。
 
 ---
 

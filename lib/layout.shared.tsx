@@ -25,7 +25,7 @@ export function baseOptions(): BaseLayoutProps {
       title: (
         <span className="flex items-center gap-2 font-semibold">
           <NavLogo className="h-7 w-7 shrink-0" />
-          Python 学习
+          PyCraft
         </span>
       ),
       url: '/docs',
