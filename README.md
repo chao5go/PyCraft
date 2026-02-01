@@ -2,7 +2,7 @@
 
 面向 LeetCode 的 Python 语法与基础教程，在浏览器里写代码、看结果，无需安装环境。
 
-- **访问地址**：`https://www.pycraft.cn/`
+- **访问地址**：[https://www.pycraft.cn/](https://www.pycraft.cn/)
 
 ![image.png](https://piggo5.oss-cn-shenzhen.aliyuncs.com/2026/20260201160110082.png)
 
